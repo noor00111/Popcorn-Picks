@@ -1,244 +1,213 @@
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
-import Swal from 'sweetalert2'
-import Select from 'react-select'
-import { Rating } from 'react-simple-star-rating'
+import Swal from 'sweetalert2';
+import Select from 'react-select';
+import { Rating } from 'react-simple-star-rating';
 import { AuthContext } from '../provider/AuthProvider';
 import { useNavigate } from 'react-router-dom';
-import { reactStyle } from '../utls/reactSelectStyle';
+import { useTheme } from '../ThemeController/DarkLightMode.jsx';
+import { FaFilm, FaPlusCircle } from 'react-icons/fa';
+import FieldError from '../components/AddandUpdate/FieldError.jsx';
+import SectionEyebrow from '../components/AddandUpdate/SectionEyebrow.jsx';
+import FieldLabel from '../components/AddandUpdate/FieldLabel.jsx';
+import { genres, years } from '../utls/genresAndYears.js';
+import { useSelectStyles } from '../styles/addMovieSelect.js';
+
 
 const AddMovies = () => {
-    const [error, setError] = useState({});
-    const [rating, setRating] = useState(0);
-    const {user} = useContext(AuthContext);
-    const navigate = useNavigate();
-
-    const genres = [
-        { value: 'Comedy', label: 'Comedy' },
-        { value: 'Animated', label: 'Animated' },
-        { value: 'Science-Fiction', label: 'Science-Fiction' },
-        { value: 'Drama', label: 'Drama' },
-        { value: 'adventure', label: 'Adventure' },
-        { value: 'Action', label: 'Action' },
-        { value: 'Romance', label: 'Romance' },
-        { value: 'Thriller', label: 'Thriller' },
-        { value: 'Horror', label: 'Horror' },
-    ]
-
-    const years = [
-        { value: '2024', label: '2024' },
-        { value: '2023', label: '2023' },
-        { value: '2022', label: '2022' },
-        { value: '2021', label: '2021' },
-        { value: '2020', label: '2020' },
-        { value: '2019', label: '2019' },
-    ]
-
-    const handleRating = (rate) => {
-        setRating(rate);
-    }
-
-    const handleAddMovie = (e) => {
-        e.preventDefault();
-
-        const addMovieForm = e.target;
-        const poster = addMovieForm.poster.value;
-        const title = addMovieForm.title.value;
-        const genre = [];
-        Array.from(addMovieForm.genre).forEach((val)=>genre.push(val.value));
-        const duration = addMovieForm.duration.value;
-        const year = addMovieForm.year.value;
-        const summary = addMovieForm.summary.value;
-
-        const newMovies = { poster, title, genre, duration, year, rating, summary };
+  const [errors, setErrors]           = useState({});
+  const [rating, setRating]           = useState(0);
+  const [selectedGenre, setSelectedGenre] = useState([]);
+  const [selectedYear,  setSelectedYear]  = useState(null);
+  const { user }    = useContext(AuthContext);
+  const navigate    = useNavigate();
+  const { isDark }  = useTheme();
+  const sel = useSelectStyles();
 
 
-        // check all validation
-        // if (!validator.isURL(poster)) {
-        //     setError({...error, poster: "Must be a valid image URL"})
-        //     return;
-        // }
+  const handleAddMovie = e => {
+    e.preventDefault();
+    const form     = e.target;
+    const poster   = form.poster.value;
+    const title    = form.title.value;
+    const duration = form.duration.value;
+    const summary  = form.summary.value;
+    const genre    = selectedGenre.map(g => g.value);
+    const year     = selectedYear?.value ?? '';
 
-        let validationError = {};
+    const errs = {};
+    if (!poster.match(/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/i))
+      errs.poster   = 'Must be a valid image URL ending in .jpg, .jpeg, .png, or .gif';
+    if (title.trim().length < 2)
+      errs.title    = 'Title must be at least 2 characters';
+    if (!genre.length)
+      errs.genre    = 'Select at least one genre';
+    if (!duration || Number(duration) <= 60)
+      errs.duration = 'Duration must exceed 60 minutes';
+    if (!year)
+      errs.year     = 'Release year is required';
+    if (rating === 0)
+      errs.rating   = 'Give the movie a rating';
+    if (summary.trim().length < 10)
+      errs.summary  = 'Summary must be at least 10 characters';
 
-        if (!poster.match(/^https?:\/\/.+\.(jpg|jpeg|png|gif)$/)) {
-            validationError = { ...validationError, poster: "Must be a valid image URL" }
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+
+    fetch('https://popcorn-picks-server.vercel.app/movies', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ poster, title, genre, duration, year, rating, summary, email: user.email }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.insertedId) {
+          Swal.fire({ title: 'Added!', text: 'Movie added to the collection.', icon: 'success', confirmButtonText: 'View Collection' });
+          navigate('/allMovies');
         }
-        if (title.trim().length < 2) {
-            validationError = { ...validationError, title: "Must have atleast 2 characters" }
-        }
-        if (!genre) {
-            validationError = { ...validationError, genre: "There must be a Genre" }
-        }
-        if (!duration || Number(duration) <= 60) {
-            validationError = { ...validationError, duration: "The duration must exceed sixty minutes" }
-        }
-        if (!year) {
-            validationError = { ...validationError, year: "The year of release is required." }
-        }
-        if (rating === 0) {
-            validationError = { ...validationError, rating: "Rating is required" }
-        }
-        if (summary.trim().length < 10) {
-            validationError = { ...validationError, summary: "A minimum of ten characters must be used in the summary" }
-        }
-        setError(validationError);
-        if(validationError && validationError.length > 0){
-            return;
-        }
+      })
+      .catch(() => toast.error('Failed to add movie — please try again.'));
+  };
 
-        fetch('http://localhost:5000/movies', {
-            method: "POST",
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({...newMovies, email: user.email})
-        })
-            .then(res => {
-                return res.json()})
-            .then(data => {
-                if (data.insertedId) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Successfully Added Movie',
-                        icon: 'success',
-                        confirmButtonText: 'Movie Added'
-                    })
-                    navigate("/allMovies");
-                }
-            })
-            .catch(err=>{
-               toast.error("Failed To Add Movie")
-            })
-    }
+  const inputClass = "w-full px-4 py-3 rounded-[0.625rem] bg-[rgba(255,255,255,0.05)] dark:bg-[rgba(255,255,255,0.05)] border-[1.5px] border-black/[0.13] dark:border-white/10 text-bodyColor text-sm font-paraFont transition-[border-color,box-shadow] duration-200 focus:border-[#f5c518] focus:shadow-[0_0_0_3px_rgba(245,197,24,0.15)] outline-none box-border bg-[#fafaf8] dark:bg-[rgba(255,255,255,0.05)]";
 
-    return (
-        <div className="backdrop-blur-md bg-gray-700 bg-opacity-60 md:p-24 p-10 lg:w-7/12 mx-auto my-20">
-            <h1 className="text-[#d0d8e3] text-6xl font-titleFont text-center mb-5 animate-pulse duration-[3s]"> Add Movie</h1>
-            <p className="font-paraFont text-gray-300 md:text-center mb-5 md:text-sm text-xs text-justify">Fill our movie collection with your favorite movies to make them come to life! Add the movie's title, genre, release date, and other information you wish to contribute. Regardless of whether it's a recent release or an enduring classic, your contribution aids others in finding fantastic films. Together, we can make our movie portal the go-to place for moviegoers!</p>
+  return (
+    <div className="bg-backgroundColor min-h-screen px-5 pt-12 pb-16 transition-[background] duration-300">
+      <div className="max-w-[760px] mx-auto">
 
-            <form
-                onSubmit={handleAddMovie}>
-                <div className="md:flex gap-4">
+        <div className="bg-[#09090f] rounded-t-2xl overflow-hidden">
+          <div className="h-2 bg-[repeating-linear-gradient(90deg,#f5c518_0,#f5c518_28px,#09090f_28px,#09090f_56px)]" />
 
-                    <div className="form-control md:w-1/2">
-                        <label className="form-control">
-                            <span className="label-text my-3"> Movie Poster </span>
-                        </label>
-                        <label className="input input-bordered inputStyle">
-                            <input type="url" name="poster" className="grow w-full" placeholder="Enter Movie Poster" />
-                        </label>
+          <div className="px-10 pt-8 pb-7">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 shrink-0 bg-[linear-gradient(135deg,#f5c518,#e5a800)] rounded-[0.625rem] flex items-center justify-center shadow-[0_4px_18px_rgba(245,197,24,0.45)]">
+                <FaFilm className="text-[#09090f] text-[1.1rem]" />
+              </div>
 
-                        {error.poster &&
-                            (<span className='mt-2 text-red-800 font-semibold'> {error.poster}</span>)
-                        }
-                    </div>
+              <div>
+                <p className="text-white/[0.35] text-[0.62rem] tracking-[0.22em] uppercase font-bold mb-[0.2rem]">
+                  Popcorn Picks
+                </p>
+                <h1 className="font-titleFont text-[clamp(1.6rem,4vw,2.25rem)] text-white leading-none [text-wrap:balance] m-0">
+                  Add to the Collection
+                </h1>
+              </div>
+            </div>
 
-                    <div className="form-control md:w-1/2">
-                        <label className="form-control my-3">
-                            <span className="label-text"> Movie Title</span>
-                        </label>
-                        <label className="input input-bordered inputStyle">
-                            <input type="text" name="title" className="grow w-full" placeholder="Enter Movie Title" />
-                        </label>
-                        {error.title &&
-                            (<span className='mt-2 text-red-800 font-semibold'> {error.title}</span>)
-                        }
-                    </div>
-                </div>
+            <p className="text-white/[0.40] text-[0.845rem] leading-[1.75] mt-4 mb-6 max-w-[480px]">
+              Every great film deserves a place here. Fill in the details below and cast this movie into the Popcorn Picks universe.
+            </p>
 
-
-                <div className="md:flex gap-4">
-                    <div className="form-control md:w-1/2">
-                        <label className="form-control">
-                            <span className="label-text my-3">Genre</span>
-                        </label>
-                        <Select
-                            styles={reactStyle}
-                            name='genre'
-                            options={genres}
-                            isMulti
-                            classNamePrefix="select"
-                            placeholder="Please Select Genre"
-                        ></Select>
-                        {error.genre &&
-                            (<span className='mt-2 text-red-800 font-semibold'> {error.genre}</span>)
-                        }
-                    </div>
-
-                    <div className="form-control md:w-1/2">
-                        <label className="form-control">
-                            <span className="label-text my-3">Duration</span>
-                        </label>
-                        <label className="input input-bordered inputStyle">
-                            <input type="text" name="duration" className="grow w-full" placeholder="Movie duration in minutes (e.g., 120)" />
-                        </label>
-
-                        {error.duration &&
-                            (<span className='mt-2 text-red-800 font-semibold'> {error.duration}</span>)
-                        }
-                    </div>
-
-                </div>
-
-                <div className="md:flex gap-4 ">
-                    <div className="form-control md:w-1/2">
-                        <label className="form-control">
-                            <span className="label-text my-3">Release Year</span>
-                        </label>
-
-                        <Select
-                            name='year'
-                            options={years}
-                            className='basic-single'
-                            classNamePrefix="select"
-                            placeholder="Please Select Year"
-                            styles={reactStyle}
-
-                        ></Select>
-
-                        {error.year &&
-                            (<span className='mt-2 text-red-800 font-semibold'> {error.year}</span>)
-                        }
-                    </div>
-
-                    <div className="form-control md:w-1/2">
-                        <label className="form-control">
-                            <span className="label-text my-3">Rating</span>
-                        </label>
-                        <label className="input input-bordered inputStyle">
-                            <Rating
-                                onClick={handleRating}
-                                initialValue={rating}
-                                size={20}
-                                fillColor="yellow"
-                                emptyColor="gray"
-                            ></Rating>
-                        </label>
-
-                        {
-                            error.rating &&
-                            (<span className='mt-2 text-red-800 font-semibold'> {error.rating}</span>)
-                        }
-                    </div>
-                </div>
-
-
-                <div className="form-control mb-7">
-                    <label className="form-control">
-                        <span className="label-text my-3">Summary</span>
-                    </label>
-                    <textarea name="summary" className="grow rounded-2xl input input-bordered p-3 inputStyle h-[120px]" placeholder="Short Summary of the movie" ></textarea>
-
-                    {error.summary &&
-                        (<span className='mt-2 text-red-800 font-semibold'> {error.summary}</span>)
-                    }
-                </div>
-
-                <input type="submit" value="Add" className="btn btn-block text-lg text-gray-800 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400 font-titleFont border-3 border-blue-800" />
-            </form>
+            <div className="flex items-center gap-[0.45rem]">
+              {Array.from({ length: 16 }).map((_, i) => (
+                <div key={i} className="w-[5px] h-[5px] rounded-full bg-white/10 shrink-0" />
+              ))}
+              <div className="flex-1 h-px bg-white/[0.06]" />
+            </div>
+          </div>
         </div>
-    );
+
+        <div className="bg-white dark:bg-[#0d0d1a] border border-black/[0.08] dark:border-white/[0.07] border-t-0 rounded-b-2xl shadow-[0_24px_64px_rgba(0,0,0,0.09)] dark:shadow-[0_32px_80px_rgba(0,0,0,0.65)] px-10 pt-9 pb-10 transition-[background,box-shadow] duration-300">
+          <form onSubmit={handleAddMovie}>
+
+            <SectionEyebrow label="Film Identity" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+              <div>
+                <FieldLabel htmlFor="poster" label="Poster URL" />
+                <input
+                  id="poster" name="poster" type="url" autoComplete="url"
+                  placeholder="https://example.com/poster.jpg"
+                  className={inputClass}
+                />
+                <FieldError msg={errors.poster} />
+              </div>
+              <div>
+                <FieldLabel htmlFor="title" label="Movie Title" />
+                <input
+                  id="title" name="title" type="text" autoComplete="off"
+                  placeholder="e.g. The Grand Illusion"
+                  className={inputClass}
+                />
+                <FieldError msg={errors.title} />
+              </div>
+            </div>
+
+            <div className="h-px bg-black/[0.08] dark:bg-white/[0.07] mb-8" />
+            <SectionEyebrow label="Production Details" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+              <div>
+                <FieldLabel htmlFor="genre" label="Genre" />
+                <Select
+                  inputId="genre" name="genre" options={genres}
+                  isMulti styles={sel} placeholder="Select genres…"
+                  value={selectedGenre} onChange={setSelectedGenre}
+                />
+                <FieldError msg={errors.genre} />
+              </div>
+              <div>
+                <FieldLabel htmlFor="duration" label="Duration (minutes)" />
+                <input
+                  id="duration" name="duration" type="number" autoComplete="off"
+                  placeholder="e.g. 120" min="1"
+                  className={inputClass}
+                />
+                <FieldError msg={errors.duration} />
+              </div>
+              <div>
+                <FieldLabel htmlFor="year" label="Release Year" />
+                <Select
+                  inputId="year" name="year" options={years}
+                  styles={sel} placeholder="Select year…"
+                  value={selectedYear} onChange={setSelectedYear}
+                />
+                <FieldError msg={errors.year} />
+              </div>
+              <div>
+                <FieldLabel label="Your Rating" />
+                <div
+                  role="group"
+                  aria-label="Movie rating"
+                  className="w-full px-4 py-3 rounded-[0.625rem] bg-[#fafaf8] dark:bg-white/5 border-[1.5px] border-black/[0.13] dark:border-white/10 flex items-center min-h-[48px]"
+                >
+                  <Rating
+                    onClick={val => setRating(val)}
+                    initialValue={rating}
+                    size={24}
+                    fillColor="#f5c518"
+                    emptyColor={isDark ? '#374151' : '#d1d5db'}
+                    SVGstyle={{ display: 'inline' }}
+                  />
+                </div>
+                <FieldError msg={errors.rating} />
+              </div>
+            </div>
+
+            <div className="h-px bg-black/[0.08] dark:bg-white/[0.07] mb-8" />
+
+            <SectionEyebrow label="The Story" />
+            <div className="mb-9">
+              <FieldLabel htmlFor="summary" label="Summary" />
+              <textarea
+                id="summary" name="summary"
+                placeholder="A brief, spoiler-free description of the film…"
+                rows={4}
+                className={`${inputClass} resize-y leading-[1.75] min-h-[110px]`}
+              />
+              <FieldError msg={errors.summary} />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-[0.9rem] px-6 rounded-xl flex items-center justify-center gap-[0.55rem] text-[0.95rem] tracking-[0.03em] btn-gold">
+              <FaPlusCircle className="text-[0.9rem]" />
+              Add Movie to Collection
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  );
 };
 
 export default AddMovies;

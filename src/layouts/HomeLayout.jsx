@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Shared/Navbar';
 import { Outlet, useLocation } from 'react-router-dom';
-import Footer from '../components/Footer';
+import Footer from '../components/Shared/Footer';
 
 const HomeLayout = () => {
   const location = useLocation();
@@ -23,10 +23,10 @@ const HomeLayout = () => {
   }, [location]);
 
   return (
-    <div className='bg-backgroundColor '>
-      <Navbar></Navbar>
-      <Outlet></Outlet>
-      <Footer></Footer>
+    <div style={{ backgroundColor: 'var(--body_background)', color: 'var(--body_color)', minHeight: '100vh', transition: 'background-color 0.3s ease, color 0.3s ease' }}>
+      <Navbar />
+      <Outlet />
+      <Footer />
     </div>
   );
 };

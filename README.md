@@ -1,61 +1,138 @@
 # 🍿 Popcorn Picks
 
-## Project Purpose
+**Popcorn Picks** is a movie portal featuring a variety of features and an updated design. With an easy-to-use interface with responsive design and fluid animations, users can find, search, and manage their favorite films.
 
-**Popcorn Picks** is a movie portal website that displays movies based on user ratings. Each movie card is designed with hover effects and animations, allowing users to quickly view essential details such as title, rating, and release date.
+### Key Highlights
+**Responsive Design** 
+**Fast Performance**
+**Beautiful UI** 
+**Secure Authentication**
+**Persistent Data** 
 
-Users can:
-- 🔍 Search movies by title
-- 📈 Explore the **Trending Movies** section with dynamically updated data
-- 📝 View detailed pages with synopsis and ratings
-- ❤️ Add favorite movies to a personalized watchlist
-
-## Preview
-![](./public/screenshots/banner.png)
-![](./public/screenshots/detail.png)
-![](./public/screenshots/feature.png)
-
-## Live Demo 
-
-👉 [View the Live Site](https://popcorn-picks-movies-portal.web.app/)
-
-## Server-Side Code
-
-You can find the server-side code here:  
-👉 [Popcorn Picks Server Repository](https://github.com/Rain44556/Popcorn-Picks-Server)
-
+---
 
 ## Features
 
-- ✅ **Top 6 Highest-Rated Movies** section
-- 🎬 **Interactive Movie Cards** with hover animations
-- 🔍 **Search and Filter Functionality**
-- 📈 **Trending Movies Section** with dynamic content
-- 📄 **Detailed Movie Information** on separate pages
-- ❤️ **Favorites (Watchlist)** feature to save preferred movies
+ **Top Rated Movies:**  Browse the 6 highest-rated movies section
+ **Interactive Cards:**  Movie cards with smooth hover animations and transitions 
+ **Search & Filter:**  search functionality to find movies by title 
+ **Trending Section:**  Dynamic trending movies updated in real-time 
+ **Movie Details:**  Comprehensive movie information pages with synopsis and ratings 
+ **Watchlist:**  Save and manage your favorite movies in a personalized collection 
+ **User Authentication:**  Secure login/signup with Firebase 
+ **Star Rating:**  Interactive rating system for movies 
+ **Newsletter:**  Subscribe to updates and promotions 
+ **Dark/Light Mode:**  Theme switcher for comfortable viewing 
 
-## Tech Stack
+---
 
-- **Frontend:** React.js, Tailwind CSS, DaisyUI
-- **Backend:** Express.js, MongoDB, Node.js
-- **Authentication and Hosting:** Firebase and Vercel
-- **Styling Utilities:** React Icons, SweetAlert2, Swiper.js, React Toastify, React Simple Star Rating
+## Live Demo
+
+### [👉 Visit the Live Site](https://popcorn-picks-movies-portal.web.app/)
+
+---
+
+## 🛠 Tech Stack
+
+* Frontend: Vite, Tailwind CSS, DaisyUI, Firebase
+* Backend: Express.js, Node.js, MongoDB, CORS
+* Authentication and Hosting: Firebase and Vercel
+* Additional Libraries: React Router DOM, React Icons, React Toastify, SweetAlert2, Swiper.js, React Simple Star Rating
+
+---
+
+##  Getting Started
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn package manager
+- Git
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/noor00111/Popcorn-Picks.git
+   cd popcorn-picks-client
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   - Create a `.env.local` file in the root directory
+   - Add your Firebase configuration credentials:
+   ```env
+   VITE_FIREBASE_API_KEY=your_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   VITE_FIREBASE_PROJECT_ID=your_project_id
+   VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+   VITE_FIREBASE_APP_ID=your_app_id
+   VITE_API_URL=http://localhost:5000
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+   The application will open at `http://localhost:5173`
+
+---
+
+### Basic Workflow
+
+1. **Browse Movies**
+   - Visit the homepage to see featured and trending movies
+   - Use the search bar to find specific movies from the allMovies page
+
+2. **View Movie Details**
+   - Click on any movie card to see full details
+   - Read synopsis, ratings, and additional information
+   - Also Update the information
+
+3. **Create Account**
+   - Sign up with email or existing credentials
+   - Secure authentication via Firebase
+
+4. **Manage Favorites**
+   - Add movies to your watchlist
+   - Remove or manage favorites from the "My Favorites" page
+
+5. **Add New Movies** (Admin/Authenticated Users)
+   - Navigate to "Add Movies" section
+   - Fill in movie details and submit
+   - Movies appear immediately on the portal
+
+---
+
+## 🔗 Related Repositories
+
+### Backend Server
+- **Repository:** [Popcorn Picks Server](https://github.com/noor00111/Popcorn-Picks-Server)
+- **Purpose:** Express.js API server with MongoDB integration
+- **Technology:** Node.js, Express, MongoDB, CORS
+
+---
+
+## 📸 Screenshots
+
+### Homepage
+![Home](./public/screenshots/homepage.png)
+
+### Form page
+![Add Form](./public/screenshots/addformpage.png)
+![Update Form](./public/screenshots/updateformpage.png)
+
+### Favorite page
+![Can remove movie card](./public/screenshots/remove.png)
+
+### Movies page
+![All Movies](./public/screenshots/allmovies.png)
 
 
-## NPM Packages Used
+---
 
-### Client-Side:
-- `react-router-dom`  
-- `react-icons`  
-- `react-toastify`  
-- `sweetalert2`  
-- `swiper`  
-- `react-simple-star-rating`  
-- `tailwindcss`  
-- `daisyui`
-
-### Server-Side:
-- `mongodb`  
-- `cors`  
-- `dotenv`  
-- `express`  
+## Contributing Contributions are welcome!

@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { ThemeProvider } from './ThemeController/DarkLightMode.jsx'
 import HomeLayout from './layouts/HomeLayout'
 import AuthLayout from './layouts/AuthLayout'
 import Login from './pages/Login'
@@ -16,10 +17,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import PrivateRoute from './PrivateRoute/PrivateRoute'
 import MovieDetails from './pages/movieDetails'
 import UpdatedMovie from './pages/UpdatedMovie'
-import FeaturedMovies from './components/FeaturedMovies'
+import FeaturedMovies from './components/Home/FeaturedMovies'
 import About from './pages/About'
 import Contact from './pages/Contact'
-
 
 const router = createBrowserRouter([
 
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
       {
         path: "/allMovies",
         element:<AllMovies></AllMovies>,
-        loader: () => fetch('http://localhost:5000/movies?sort=rating')
+        loader: () => fetch('https://popcorn-picks-server.vercel.app/movies?sort=rating')
       },
       {
         path: "/addMovie",
@@ -47,12 +47,12 @@ const router = createBrowserRouter([
       {
         path: "/movieDetails/:id",
         element:(<PrivateRoute><MovieDetails></MovieDetails></PrivateRoute>),
-        loader: ({params})=> fetch(`http://localhost:5000/movies/${params.id}`)
+        loader: ({params})=> fetch(`https://popcorn-picks-server.vercel.app/movies/${params.id}`)
       },
       {
         path: "/updatedMovie/:id",
         element:<PrivateRoute><UpdatedMovie></UpdatedMovie></PrivateRoute>,
-        loader: ({params})=> fetch(`http://localhost:5000/movies/${params.id}`)
+        loader: ({params})=> fetch(`https://popcorn-picks-server.vercel.app/movies/${params.id}`)
       },
       {
         path: "/about",
@@ -88,9 +88,11 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+  <ThemeProvider>
   <AuthProvider>
   <RouterProvider router={router}></RouterProvider>
   <ToastContainer />
   </AuthProvider>
+  </ThemeProvider>
   </StrictMode>,
 )
