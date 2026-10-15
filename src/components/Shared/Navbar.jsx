@@ -14,56 +14,35 @@ const Navbar = () => {
   const navItems = [...publicLinks, ...(user ? privateLinks : [])];
 
 
-  const linkStyle = ({ isActive }) => ({
-    padding: "0.375rem 0.875rem",
-    borderRadius: "9999px",
-    fontSize: "0.85rem",
-    fontWeight: 500,
-    textDecoration: "none",
-    transition: "background 0.2s ease, color 0.2s ease",
-    background: isActive ? "#f5c518" : "transparent",
-    color: isActive ? "#09090f" : "var(--nav-link-color)",
-    whiteSpace: "nowrap",
-  });
+  const linkClass = ({ isActive }) =>
+    `px-[0.875rem] py-1.5 rounded-full text-[0.85rem] font-medium no-underline whitespace-nowrap transition-colors duration-200 ${
+      isActive ? "bg-[#f5c518] text-[#09090f]" : "text-[var(--nav-link-color)] hover:text-[var(--body_color)]"
+    }`;
 
-  const mobileLinkStyle = ({ isActive }) => ({
-    display: "flex",
-    padding: "0.75rem 0",
-    color: isActive ? "#f5c518" : "var(--nav-link-color)",
-    fontWeight: isActive ? 600 : 400,
-    textDecoration: "none",
-    fontSize: "0.95rem",
-    borderBottom: "1px solid var(--divider)",
-    transition: "color 0.2s",
-  });
+  const mobileLinkClass = ({ isActive }) =>
+    `flex py-3 text-[0.95rem] no-underline border-b border-[var(--divider)] transition-colors duration-200 ${
+      isActive ? "text-[#f5c518] font-semibold" : "text-[var(--nav-link-color)] font-normal"
+    }`;
 
   return (
     <nav
-      className={`sticky top-0 z-50 backdrop-blur-3xl transition-all duration-300 border-b`}
-      style={{
-        background: scrolled ? isDark ? "rgba(9,9,15,0.97)" : "rgba(254,252,232,0.97)"
-          : isDark ? "rgba(9,9,15,0.80)": "rgba(254,252,232,0.85)",
-        borderColor: "var(--nav-border)",
-        boxShadow: scrolled ? `0 4px 40px var(--shadow)` : "none",
-      }}
-    >
+      className={`sticky top-0 z-50 backdrop-blur-3xl border-b border-[var(--nav-border)] transition-[background-color,box-shadow] duration-300 ${
+        scrolled
+          ? "bg-[rgba(254,252,232,0.97)] dark:bg-[rgba(9,9,15,0.97)] shadow-[0_4px_40px_var(--shadow)]"
+          : "bg-[rgba(254,252,232,0.85)] dark:bg-[rgba(9,9,15,0.80)]"
+      }`}>
       <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center gap-4">
         <Link to="/"className="flex items-center gap-2 flex-shrink-0 no-underline">
           <FaFilm className="text-[#f5c518] text-[1.35rem]" />
           <span className="font-['Rancho'] text-2xl tracking-[0.02em] leading-none">
-            <span className="text-[var(--body_color)]">POPCORN</span>
-            <span className="text-[#f5c518]"> PICKS</span>
+            <span className="text-[var(--body_color)]">POPCORN PICKS</span>
           </span>
         </Link>
 
         <div className="hidden lg:flex flex-1 justify-center">
-          <div className="flex items-center gap-0.5 rounded-full p-1 border"
-            style={{
-              background: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)",
-              borderColor: "var(--nav-border)",
-            }}>
+          <div className="flex items-center gap-0.5 rounded-full p-1 border border-[var(--nav-border)] bg-black/5 dark:bg-white/5">
             {navItems.map((item) => (
-              <NavLink key={item.to} to={item.to} end={item.to === "/"} style={linkStyle}>
+              <NavLink key={item.to} to={item.to} end={item.to === "/"} className={linkClass}>
                 {item.label}
               </NavLink>
             ))}
@@ -72,19 +51,16 @@ const Navbar = () => {
 
         <div className="ml-auto flex items-center gap-3">
           <button onClick={toggleTheme}
-          className=" flex items-center justify-center w-9 h-9 rounded-full cursor-pointer flex-shrink-0 text-[0.9rem] transition-colors duration-200"
-          style={{
-              border: `1px solid var(--nav-border)`,
-              background: isDark ? "rgba(245,197,24,0.12)" : "rgba(0,0,0,0.06)",
-              color: "#f5c518"}}>
+          aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          className="flex items-center justify-center w-9 h-9 rounded-full cursor-pointer flex-shrink-0 text-[0.9rem] text-[#f5c518] border border-[var(--nav-border)] bg-black/[0.06] dark:bg-[rgba(245,197,24,0.12)] transition-colors duration-200">
             {isDark ? <FaSun /> : <FaMoon className="text-[#1d4ed8]" />}
           </button>
 
           {user?.email ? (
             <div className="dropdown dropdown-end">
               <button type="button" 
-                className="w-[38px] h-[38px] rounded-full overflow-hidden cursor-pointer flex-shrink-0 flex items-center justify-center p-0"
-                style={{ border: "2px solid rgba(245,197,24,0.45)", background: "var(--card-bg)",}}>
+                aria-label="Account menu"
+                className="w-[38px] h-[38px] rounded-full overflow-hidden cursor-pointer flex-shrink-0 flex items-center justify-center p-0 border-2 border-[rgba(245,197,24,0.45)] bg-[var(--card-bg)]">
                 {user?.photoURL ? (
                   <img
                     src={user.photoURL}
@@ -97,8 +73,7 @@ const Navbar = () => {
                 )}
               </button>
               <ul tabIndex={0} 
-               className=" dropdown-content z-[1] mt-2 shadow-2xl border rounded-[0.875rem] p-4 backdrop-blur-[20px] min-w-[190px] list-none dark:bg-[rgba(12,12,20,0.97)] bg-[rgba(254,252,232,0.98)]"
-               style={{borderColor: "var(--card-border)"}}>
+               className="dropdown-content z-[1] mt-2 shadow-2xl border border-[var(--card-border)] rounded-[0.875rem] p-4 backdrop-blur-[20px] min-w-[190px] list-none dark:bg-[rgba(12,12,20,0.97)] bg-[rgba(254,252,232,0.98)]">
                 <li className="pb-3 mb-3 border-b">
                   <span className="text-[var(--body_color_muted)] text-[0.72rem] block mb-[0.2rem]">
                     Signed in as
@@ -128,7 +103,6 @@ const Navbar = () => {
             </div>
           )}
 
-          {/* ------------mobile view--------- */}
           <button
             className={`lg:hidden border border-[var(--nav-border)] rounded-lg px-[0.55rem] py-[0.4rem] text-[var(--body_color)] cursor-pointer flex items-center ${isDark ? "bg-white/6" : "bg-black/6"}`}
             onClick={() => setMobileOpen((o) => !o)}
@@ -146,7 +120,7 @@ const Navbar = () => {
               key={item.to}
               to={item.to}
               end={item.to === "/"}
-              style={mobileLinkStyle}
+              className={mobileLinkClass}
               onClick={() => setMobileOpen(false)}>
               {item.label}
             </NavLink>

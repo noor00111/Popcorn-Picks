@@ -1,60 +1,85 @@
-import React from "react";
+import { Link } from "react-router-dom";
+import { FaArrowRight, FaLock } from "react-icons/fa";
 import { features } from "../utls/aboutData";
-
+import "../styles/cinema.css";
 
 const About = () => {
   return (
-    <div className="bg-backgroundColor min-h-screen px-5 py-14 transition-[background] duration-300">
-      <div className="max-w-[900px] mx-auto">
+    <div className="bg-backgroundColor min-h-screen px-4 sm:px-6 py-12 md:py-16 transition-colors duration-300">
+      <div className="max-w-[960px] mx-auto">
 
-        <div className="text-center mb-12">
-          <span className="text-[#f5c518] text-[0.68rem] tracking-[0.26em] uppercase font-bold">
-            Who we are
-          </span>
-          <h1 className="font-titleFont text-[clamp(2.5rem,6vw,4rem)] text-[#1a1a1a] dark:text-white leading-[1.05] [text-wrap:balance] mt-[0.3rem] mb-4">
-            About Us
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 text-base leading-[1.8] max-w-[620px] mx-auto">
-            Welcome to{" "}
-            <span className="text-[#d97706] dark:text-[#f5c518] font-bold font-titleFont text-[1.1em]">PopcornPicks</span>
-            , your ultimate destination for all things cinema. We're passionate about movies and dedicated to celebrating storytelling, creativity, and the magic of the silver screen.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
-          {features.map(({ icon: Icon, title, body }) => (
-            <div
-              key={title}
-              className="bg-white dark:bg-[#0d0d1a] border border-black/[0.08] dark:border-white/[0.07] rounded-2xl px-6 py-7 shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.40)] feature-card">
-              <div className="w-10 h-10 rounded-[0.625rem] mb-4 bg-[rgba(167,139,250,0.10)] dark:bg-[rgba(167,139,250,0.12)] border border-[rgba(167,139,250,0.22)] flex items-center justify-center">
-                <Icon className="text-[#a78bfa] text-[1.1rem]" />
-              </div>
-
-              <div className="h-[2px] w-8 bg-[#f5c518] rounded-[1px] mb-[0.875rem]" />
-              <h3 className="font-paraFont text-base font-extrabold text-[#d97706] dark:text-[#f5c518] mb-[0.6rem]">
-                {title}
-              </h3>
-              <p className="text-gray-500 dark:text-[#9ca3af] text-sm leading-[1.75]">{body}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="bg-[rgba(245,197,24,0.08)] border border-[rgba(245,197,24,0.15)] dark:border-[rgba(245,197,24,0.15)] rounded-2xl p-8">
-          <div className="flex gap-3 items-start">
-            <div className="text-[2.5rem] leading-none text-[#f5c518] shrink-0 font-[Georgia,serif] -mt-1">&ldquo;</div>
-            <p className="text-gray-600 dark:text-gray-400 text-base leading-[1.8]">
-              Whether you're looking for inspiration, entertainment, or a walk down memory lane,{" "}
-              <span className="text-[#d97706] dark:text-[#f5c518] font-bold">PopcornPicks</span>{" "}
-              is here to spark your imagination and keep the movie magic alive. Sit back, grab some popcorn, and let the show begin.
+        <header className="marquee">
+          <div className="relative rounded-2xl px-6 py-14 md:py-20 text-center bg-[radial-gradient(ellipse_at_top,#2a2116_0%,#0f0d0c_70%)]">
+            <p className="text-[0.7rem] font-bold tracking-[0.4em] uppercase text-[#f5c518]/80">
+              Now showing
+            </p>
+            <h1 className="font-titleFont leading-none mt-3 text-[clamp(3.5rem,12vw,7.5rem)] text-[#fde68a] [text-shadow:0_0_28px_rgba(245,197,24,0.45)] [text-wrap:balance]">
+              PopcornPicks
+            </h1>
+            <p className="mt-4 text-base md:text-lg text-white/70 max-w-[460px] mx-auto leading-relaxed [text-wrap:pretty]">
+              A home for the movies you love: find them, add them, keep them.
             </p>
           </div>
-          <div className="mt-5 pt-5 border-t border-black/[0.07] dark:border-white/[0.06] flex items-center gap-2">
-            <div className="w-6 h-[2px] bg-[#f5c518] rounded-[1px]" />
-            <span className="text-xs font-bold tracking-[0.1em] uppercase text-gray-400 dark:text-gray-500">
-              The PopcornPicks Team
-            </span>
+        </header>
+
+        <section className="grid md:grid-cols-[0.9fr_1.1fr] gap-6 md:gap-12 mt-14 md:mt-20 items-start">
+          <h2 className="font-titleFont text-[clamp(2rem,5vw,2.75rem)] leading-[1.05] text-bodyColor [text-wrap:balance]">
+            Made by a movie fan, for movie fans.
+          </h2>
+          <div className="space-y-4 text-[0.98rem] leading-[1.8] text-colorMuted [text-wrap:pretty]">
+            <p>
+              PopcornPicks started with a simple idea: one place to keep track of films worth watching.
+            </p>
+            <p>
+              Anyone can browse the catalogue. Sign in and you can add movies you think others should see,
+              rate them, and build a favourites list of your own.
+            </p>
           </div>
-        </div>
+        </section>
+
+        <section className="mt-16 md:mt-24" aria-labelledby="about-features">
+          <div className="flex items-end justify-between gap-4 flex-wrap mb-4">
+            <h2 id="about-features" className="font-titleFont text-[clamp(1.8rem,4vw,2.4rem)] text-bodyColor leading-none">
+              What you can do here
+            </h2>
+            <p className="flex items-center gap-1.5 text-xs text-colorMuted">
+              <FaLock className="text-[0.65rem]" aria-hidden="true" />
+              Members only: log in first
+            </p>
+          </div>
+
+          <ul className="border-t-2 border-bodyColor">
+            {features.map(({ icon: Icon, title, body, to, cta, needsLogin }) => (
+              <li
+                key={title}
+                className="group grid grid-cols-[auto_1fr] sm:grid-cols-[auto_1fr_auto] items-center gap-x-5 gap-y-3 py-6 px-2 sm:px-4 border-b border-[var(--divider)] transition-colors duration-200 hover:bg-[rgba(245,197,24,0.07)]">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#1c1917] text-[#f5c518] text-lg shadow-[0_6px_16px_rgba(0,0,0,0.18)] dark:border dark:border-[rgba(245,197,24,0.25)]">
+                  <Icon aria-hidden="true" />
+                </div>
+
+                <div className="min-w-0">
+                  <h3 className="flex items-center gap-2 flex-wrap font-titleFont text-[1.6rem] leading-tight text-bodyColor">
+                    {title}
+                    {needsLogin && (
+                      <span className="inline-flex items-center gap-1 font-paraFont text-[0.6rem] font-bold tracking-[0.12em] uppercase px-2 py-0.5 rounded-full border border-[var(--divider)] text-colorMuted">
+                        <FaLock className="text-[0.5rem]" aria-hidden="true" />
+                        Members
+                      </span>
+                    )}
+                  </h3>
+                  <p className="mt-1 text-sm leading-relaxed text-colorMuted max-w-[52ch]">{body}</p>
+                </div>
+
+                <Link
+                  to={to}
+                  className="col-start-2 sm:col-start-auto justify-self-start sm:justify-self-end inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap border border-[var(--divider)] text-bodyColor transition-[background-color,border-color,color] duration-200 hover:bg-[#f5c518] hover:border-[#f5c518] hover:text-[#09090f]">
+                  {cta}
+                  <FaArrowRight className="text-[0.7rem] transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
     </div>
   );

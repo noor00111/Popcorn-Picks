@@ -66,7 +66,7 @@ const AddMovies = () => {
           navigate('/allMovies');
         }
       })
-      .catch(() => toast.error('Failed to add movie — please try again.'));
+      .catch(() => toast.error('Failed to add movie. Please try again.'));
   };
 
   const inputClass = "w-full px-4 py-3 rounded-[0.625rem] bg-[rgba(255,255,255,0.05)] dark:bg-[rgba(255,255,255,0.05)] border-[1.5px] border-black/[0.13] dark:border-white/10 text-bodyColor text-sm font-paraFont transition-[border-color,box-shadow] duration-200 focus:border-[#f5c518] focus:shadow-[0_0_0_3px_rgba(245,197,24,0.15)] outline-none box-border bg-[#fafaf8] dark:bg-[rgba(255,255,255,0.05)]";
@@ -139,7 +139,7 @@ const AddMovies = () => {
                 <FieldLabel htmlFor="genre" label="Genre" />
                 <Select
                   inputId="genre" name="genre" options={genres}
-                  isMulti styles={sel} placeholder="Select genres…"
+                  isMulti styles={sel} placeholder="Select genres"
                   value={selectedGenre} onChange={setSelectedGenre}
                 />
                 <FieldError msg={errors.genre} />
@@ -157,7 +157,7 @@ const AddMovies = () => {
                 <FieldLabel htmlFor="year" label="Release Year" />
                 <Select
                   inputId="year" name="year" options={years}
-                  styles={sel} placeholder="Select year…"
+                  styles={sel} placeholder="Select year"
                   value={selectedYear} onChange={setSelectedYear}
                 />
                 <FieldError msg={errors.year} />
@@ -189,7 +189,7 @@ const AddMovies = () => {
               <FieldLabel htmlFor="summary" label="Summary" />
               <textarea
                 id="summary" name="summary"
-                placeholder="A brief, spoiler-free description of the film…"
+                placeholder="A brief, spoiler-free description of the film"
                 rows={4}
                 className={`${inputClass} resize-y leading-[1.75] min-h-[110px]`}
               />

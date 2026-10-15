@@ -46,7 +46,7 @@ const AllMovies = () => {
               type="text"
               value={query}
               onChange={(e) => searchMovie(e.target.value)}
-              placeholder="Search by title…"
+              placeholder="Search by title"
               className={`w-full py-[0.875rem] pr-11 pl-11 rounded-full text-[0.88rem] transition-[border-color,box-shadow,background] duration-200 box-border bg-white dark:bg-white/[0.06] text-[#1a1a1a] dark:text-[#f3f4f6] outline-none border-[1.5px] ${
                 focused
                   ? 'border-[rgba(245,197,24,0.60)] shadow-[0_0_0_3px_rgba(245,197,24,0.14)]'

@@ -46,8 +46,7 @@ const TrendingMovies = () => {
           ref={scrollRef}
           onMouseEnter={stopScroll}
           onMouseLeave={startScroll}
-          className="flex gap-4 overflow-x-auto scroll-smooth pb-3 scrollbar-hide"
-          style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}>
+          className="flex gap-4 overflow-x-auto scroll-smooth pb-3 scrollbar-hide">
           {MOVIES.map((m, i) => (
             <div
               key={i}
@@ -59,7 +58,7 @@ const TrendingMovies = () => {
                   width={210}
                   height={165}
                   loading="lazy"
-                  className="w-full h-full object-cover block transition-transform duration-500 ease-in-out group-hover:scale-105"
+                  className="w-full h-full object-cover block transition-transform duration-500 ease-in-out group-hover:scale-105 bg-black/[0.06] dark:bg-white/[0.05]"
                 />
 
                 <div className="absolute top-[0.55rem] right-[0.55rem] bg-[rgba(229,9,20,0.88)] backdrop-blur-[8px] rounded-full py-[0.18rem] px-[0.5rem] flex items-center gap-[0.22rem] text-[0.58rem] font-bold text-white tracking-[0.05em]">

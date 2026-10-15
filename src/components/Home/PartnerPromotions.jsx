@@ -28,24 +28,22 @@ const PartnerPromotions = () => {
               style={{
                 '--accent-border': p.accent.border,
                 '--accent-glow': p.accent.glow,
-              }}
-            >
+                '--accent-text': p.accent.text,
+                '--accent-bg': p.accent.bg,
+              }}>
               <div className="p-6">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="relative shrink-0">
                     <img
                       src={p.img}
                       alt={p.title}
-                      className="w-[3.25rem] h-[3.25rem] rounded-xl object-cover block"
-                      style={{ border: `1.5px solid ${p.accent.border}` }}
+                      width={52}
+                      height={52}
+                      loading="lazy"
+                      className="w-[3.25rem] h-[3.25rem] rounded-xl object-cover block bg-black/[0.06] dark:bg-white/[0.05] border-[1.5px] border-[var(--accent-border)]"
                     />
                     <div
-                      className="absolute -bottom-[0.4rem] -right-[0.4rem] w-[1.35rem] h-[1.35rem] rounded-full flex items-center justify-center text-white text-[0.55rem]"
-                      style={{
-                        background: p.accent.text,
-                        boxShadow: `0 2px 8px ${p.accent.glow}`,
-                        border: '2px solid var(--card-bg)',
-                      }}>
+                      className="absolute -bottom-[0.4rem] -right-[0.4rem] w-[1.35rem] h-[1.35rem] rounded-full flex items-center justify-center text-white text-[0.55rem] bg-[var(--accent-text)] shadow-[0_2px_8px_var(--accent-glow)] border-2 border-[var(--card-bg)]">
                       {p.icon}
                     </div>
                   </div>
@@ -55,9 +53,7 @@ const PartnerPromotions = () => {
                       {p.title}
                     </h3>
                     <span
-                      className="inline-block py-[0.18rem] px-[0.6rem] rounded-full text-[0.62rem] font-bold tracking-[0.06em] uppercase border"
-                      style={{ background: p.accent.bg, borderColor: p.accent.border, color: p.accent.text }}
-                    >
+                      className="inline-block py-[0.18rem] px-[0.6rem] rounded-full text-[0.62rem] font-bold tracking-[0.06em] uppercase border bg-[var(--accent-bg)] border-[var(--accent-border)] text-[var(--accent-text)]">
                       {p.label}
                     </span>
                   </div>
@@ -70,8 +66,7 @@ const PartnerPromotions = () => {
                 <div className="h-px bg-black/[0.07] dark:bg-white/[0.06] mb-4" />
                 <div className="flex items-center justify-between gap-3">
                   <div
-                    className="inline-flex items-center gap-[0.4rem] py-[0.35rem] px-[0.875rem] rounded-lg font-bold text-[0.8rem] tracking-[0.1em] font-mono border-[1.5px] border-dashed bg-black/[0.04] dark:bg-black/35"
-                    style={{ borderColor: p.accent.border, color: p.accent.text }}>
+                    className="inline-flex items-center gap-[0.4rem] py-[0.35rem] px-[0.875rem] rounded-lg font-bold text-[0.8rem] tracking-[0.1em] font-mono border-[1.5px] border-dashed bg-black/[0.04] dark:bg-black/35 border-[var(--accent-border)] text-[var(--accent-text)]">
                     <FaTag className="text-[0.6rem]" />
                     {p.code}
                   </div>

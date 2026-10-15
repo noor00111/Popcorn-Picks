@@ -13,7 +13,7 @@ export const bannerMovies = [
     title: "Puss in Boots",
     genre: ["Animation", "Adventure", "Fantasy"],
     description:
-      "Puss in Boots discovers that his passion for adventure has taken its toll — he has burnt through eight of his nine lives. He sets out on an epic journey to find the mythical Last Wish.",
+      "Puss in Boots discovers that his passion for adventure has taken its toll, and he has burnt through eight of his nine lives. He sets out on an epic journey to find the mythical Last Wish.",
     poster: "https://i.ibb.co.com/SPS0RwN/puss-in-boots-1.jpg",
     year: 2022,
     duration: "102 min",

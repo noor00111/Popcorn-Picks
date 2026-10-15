@@ -7,8 +7,7 @@ export const ThemeProvider = ({ children }) => {
     return localStorage.getItem("theme") === "dark";
   });
 
-  useEffect(() => {
-    document.body.setAttribute("data-theme", isDark ? "dark" : "light");
+  useEffect(() => {document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
     localStorage.setItem("theme", isDark ? "dark" : "light");
   }, [isDark]);
 

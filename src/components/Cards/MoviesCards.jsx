@@ -13,7 +13,7 @@ const MoviesCards = ({ movie }) => {
           width={260}
           height={380}
           loading="lazy"
-          className="w-full h-full object-cover block transition-transform duration-[0.6s] ease-in-out group-hover:scale-105"/>
+          className="w-full h-full object-cover block transition-transform duration-[0.6s] ease-in-out group-hover:scale-105 bg-black/[0.06] dark:bg-white/[0.05]"/>
 
         <div className="absolute top-[0.7rem] right-[0.7rem] bg-black/75 backdrop-blur-[10px] rounded-lg py-[0.28rem] px-[0.6rem] flex items-center gap-[0.28rem] border border-[rgba(245,197,24,0.25)]">
           <FaStar className="text-[#f5c518] text-[0.68rem]" />

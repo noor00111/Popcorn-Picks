@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { useTheme } from "../ThemeController/DarkLightMode";
 
 export const useUpdateSelectStyles = () => {
   const { isDark } = useTheme();
-  const [focusedField, setFocusedField] = useState(null);
 
   const inputBg = isDark ? "rgba(255,255,255,0.05)" : "#fafaf8";
   const inputBorder = isDark ? "rgba(255,255,255,0.10)": "rgba(0,0,0,0.13)";
@@ -106,33 +104,5 @@ export const useUpdateSelectStyles = () => {
     }),
   };
 
-  const inputStyle = (name) => ({
-    width: "100%",
-    padding: "0.65rem 0.875rem",
-    borderRadius: "0.6rem",
-    border: `1.5px solid ${
-      focusedField === name
-        ? focusBorder
-        : inputBorder
-    }`,
-    background: inputBg,
-    color: inputColor,
-    fontSize: "0.875rem",
-    outline: "none",
-    boxShadow:
-      focusedField === name
-        ? `0 0 0 3px ${focusShadow}`
-        : "none",
-    transition:
-      "border-color 0.2s ease, box-shadow 0.2s ease",
-    fontFamily: "'Raleway', sans-serif",
-    boxSizing: "border-box",
-  });
-
-  return {
-    selectStyles,
-    inputStyle,
-    focusOn: setFocusedField,
-    focusOff: () => setFocusedField(null),
-  };
+  return { selectStyles };
 };

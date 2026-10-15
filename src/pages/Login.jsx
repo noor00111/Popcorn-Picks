@@ -1,10 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaFilm } from 'react-icons/fa';
 import { AuthContext } from '../provider/AuthProvider';
 import { toast } from 'react-toastify';
+import GoogleIcon from '../components/Auth/GoogleIcon';
 
 const Login = () => {
     const { loginUser, setUser, logInWithGoogle } = useContext(AuthContext);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -37,89 +40,84 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 py-12">
-            <div className="relative w-full max-w-md">
-                <div className="text-center mb-8">
-                    <h1 className="sc-heading font-titleFont text-5xl mb-1 text-[#f5c518]">
-                        PopcornPicks
+        <div className="auth-page">
+            <div className="w-full max-w-lg">
+                <div className="text-center mb-7">
+                    <h1 className="font-titleFont text-5xl leading-none mb-2 text-[var(--auth-accent-text)]">
+                        PopcornPicks Login Page.
                     </h1>
-                    <p className="text-sm text-bodyColor opacity-60">
-                        Your cinematic universe awaits
-                    </p>
                 </div>
 
-                <div className="rounded-2xl shadow-2xl p-8 bg-bgForm">
-                    <h2 className="text-2xl font-bold text-center mb-6 text-bodyColor font-paraFont">
-                        Welcome Back
+                <div className="auth-card">
+                    <h2 className="text-2xl font-bold text-bodyColor font-paraFont">
+                        Welcome Back!
                     </h2>
+                    <p className="text-sm text-colorMuted mt-1 mb-6">
+                        Log in to manage your favourite movies.
+                    </p>
 
                     <form onSubmit={handleLogin} className="space-y-4">
                         <div>
-                            <label className="block text-sm font-semibold mb-1 text-bodyColor">
-                                Email
-                            </label>
-                            <input
-                                name="email"
-                                type="email"
-                                autoComplete="email"
-                                required
-                                className="w-full px-4 py-3 rounded-xl border-2 transition-colors duration-200 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/60 focus-visible:ring-offset-1 bg-backgroundColor text-bodyColor border-[#f5c518] focus:border-[#e50914] outline-none"
-                            />
+                            <label htmlFor="login-email" className="auth-label">Email</label>
+                            <div className="auth-field">
+                                <FaEnvelope className="auth-field-icon" />
+                                <input
+                                    id="login-email"
+                                    name="email"
+                                    type="email"
+                                    autoComplete="email"
+                                    placeholder="you@example.com"
+                                    required
+                                    className="auth-input"
+                                />
+                            </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-semibold mb-1 text-bodyColor">
-                                Password
-                            </label>
-                            <input
-                                name="password"
-                                type="password"
-                                autoComplete="current-password"
-                                required
-                                className="w-full px-4 py-3 rounded-xl border-2 transition-colors duration-200 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/60 focus-visible:ring-offset-1 bg-backgroundColor text-bodyColor border-[#f5c518] focus:border-[#e50914] outline-none"
-                            />
-                            <div className="text-right mt-1">
-                                <a
-                                    href="#"
-                                    className="text-xs font-medium hover:underline text-[#1d4ed8] dark:text-cyan-400">
+                            <div className="flex items-center justify-between mb-[0.4rem]">
+                                <label htmlFor="login-password" className="auth-label !mb-0">Password</label>
+                                <a href="#" className="auth-link text-xs !font-semibold">
                                     Forgot password?
                                 </a>
+                            </div>
+                            <div className="auth-field">
+                                <FaLock className="auth-field-icon" />
+                                <input
+                                    id="login-password"
+                                    name="password"
+                                    type={showPassword ? "text" : "password"}
+                                    autoComplete="current-password"
+                                    placeholder="••••••••"
+                                    required
+                                    className="auth-input has-toggle"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword((s) => !s)}
+                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                    className="auth-toggle">
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </button>
                             </div>
                         </div>
 
                         <button
                             type="submit"
-                            className="w-full py-3 rounded-xl font-bold text-sm transition-all duration-200 hover:-translate-y-0.5 mt-2 btn-gold">
-                            Login
+                            className="w-full py-3 rounded-xl text-sm mt-2 btn-gold">
+                            Log in
                         </button>
                     </form>
 
-                    <div className="flex items-center my-5">
-                        <div className="flex-1 h-px bg-bodyColor opacity-[0.15]" />
-                        <span className="px-3 text-xs font-medium text-bodyColor opacity-50">
-                            OR
-                        </span>
-                        <div className="flex-1 h-px bg-bodyColor opacity-[0.15]" />
-                    </div>
+                    <div className="auth-divider">OR</div>
 
-                    <button
-                        onClick={handleLoginWithGoogle}
-                        className="w-full flex items-center justify-center gap-3 py-3 rounded-xl border-2 font-semibold text-sm transition-all duration-200 hover:-translate-y-0.5 border-[#f5c518] text-bodyColor bg-transparent hover:bg-[#f5c518] hover:text-[#0a0a0f]">
-                        <img
-                            className="w-5 h-5"
-                            src="https://img.icons8.com/?size=100&id=KF0a7tvdESBd&format=png&color=000000"
-                            alt="Google"
-                            width={20}
-                            height={20}
-                        />
+                    <button type="button" onClick={handleLoginWithGoogle} className="auth-google">
+                        <GoogleIcon />
                         Continue with Google
                     </button>
 
-                    <p className="text-center text-sm mt-5 text-bodyColor opacity-75">
+                    <p className="text-center text-sm mt-6 text-colorMuted">
                         Don't have an account?{' '}
-                        <Link
-                            to="/auth/signup"
-                            className="font-bold hover:underline text-[#f5c518]">
+                        <Link to="/auth/signup" className="auth-link">
                             Sign up free
                         </Link>
                     </p>

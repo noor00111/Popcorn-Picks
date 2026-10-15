@@ -5,13 +5,11 @@ import { MdOutlineFavorite, MdUpdate } from "react-icons/md";
 import { FaStar, FaCalendarAlt, FaClock, FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../provider/AuthProvider";
-import { useTheme } from "../ThemeController/DarkLightMode.jsx";
 
 const MovieDetails = () => {
   const detailsData = useLoaderData();
   const navigate    = useNavigate();
   const userData    = useContext(AuthContext);
-  const { isDark }  = useTheme();
   const { _id, poster, title, genre, duration, year, rating, summary } = detailsData;
 
   const handleMovieDelete = (id) => {
@@ -73,18 +71,12 @@ const MovieDetails = () => {
 
   const stars = Math.round(Number(rating));
 
-  const blurFilter = isDark
-    ? "blur(40px) brightness(0.18) saturate(1.2)"
-    : "blur(40px) brightness(0.55) saturate(0.80)";
 
   return (
     <div className="bg-[#fefce8] dark:bg-[#09090f] min-h-screen relative transition-[background] duration-300">
       <div
-        className="fixed inset-0 bg-cover bg-center scale-110 z-0"
-        style={{
-          backgroundImage: `url(${poster})`,
-          filter: blurFilter,
-        }}
+        className="fixed inset-0 bg-cover bg-center scale-110 z-0 blur-[40px] brightness-[0.55] saturate-[0.8] dark:brightness-[0.18] dark:saturate-[1.2]"
+        style={{ backgroundImage: `url(${poster})` }}
       />
       <div className="fixed inset-0 bg-[rgba(254,252,232,0.84)] dark:bg-[rgba(9,9,15,0.85)] z-[1]" />
       <div className="relative z-[2] max-w-[1100px] mx-auto px-6 py-8">
@@ -103,7 +95,7 @@ const MovieDetails = () => {
               alt={title}
               width={360}
               height={480}
-              className="w-full h-full object-cover block"
+              className="w-full h-full object-cover block bg-black/[0.06] dark:bg-white/[0.05]"
             />
             <div className="absolute inset-0 bg-[linear-gradient(to_right,transparent_60%,rgba(255,255,255,0.30)_100%)] dark:bg-[linear-gradient(to_right,transparent_60%,rgba(9,9,15,0.5)_100%)]" />
           </div>

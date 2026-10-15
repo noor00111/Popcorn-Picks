@@ -23,7 +23,9 @@ const UpdatedMovie = () => {
   const { user }   = useContext(AuthContext);
   const navigate   = useNavigate();
   const { isDark } = useTheme();
- const {selectStyles,inputStyle,focusOn,focusOff} = useUpdateSelectStyles();
+  const { selectStyles } = useUpdateSelectStyles();
+
+  const inputClass = "w-full px-[0.875rem] py-[0.65rem] rounded-[0.6rem] bg-[#fafaf8] dark:bg-white/5 border-[1.5px] border-black/[0.13] dark:border-white/10 text-bodyColor placeholder:text-gray-400 dark:placeholder:text-gray-500 text-sm font-paraFont outline-none transition-[border-color,box-shadow] duration-200 focus:border-[#f5c518] focus:shadow-[0_0_0_3px_rgba(245,197,24,0.18)]";
 
 
   const defaultGenre = Array.isArray(genre)
@@ -100,17 +102,15 @@ const UpdatedMovie = () => {
                 </FieldLabel>
                 <input
                   id="poster" type="url" autoComplete="off"
-                  placeholder="https://…/poster.jpg"
-                  style={inputStyle('poster')}
-                  onFocus={() => focusOn('poster')}
-                  onBlur={focusOff}
+                  placeholder="https:///poster.jpg"
+                  className={inputClass}
                   defaultValue={poster}
                   {...register("poster", {
                     required: "Poster URL is required",
                     pattern: { value: /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i, message: "Must be a valid image URL" },
                   })}
                 />
-                {errors.poster && <FieldError message={errors.poster.message} />}
+                {errors.poster && <FieldError msg={errors.poster.message} />}
               </div>
               <div>
                 <FieldLabel htmlFor="title" isDark={isDark}>
@@ -120,16 +120,14 @@ const UpdatedMovie = () => {
                 <input
                   id="title" type="text" autoComplete="off"
                   placeholder="e.g. Inception"
-                  style={inputStyle('title')}
-                  onFocus={() => focusOn('title')}
-                  onBlur={focusOff}
+                  className={inputClass}
                   defaultValue={title}
                   {...register("title", {
                     required: "Movie title is required",
                     minLength: { value: 2, message: "Must have at least 2 characters" },
                   })}
                 />
-                {errors.title && <FieldError message={errors.title.message} />}
+                {errors.title && <FieldError msg={errors.title.message} />}
               </div>
             </div>
 
@@ -141,25 +139,23 @@ const UpdatedMovie = () => {
                   name="genre" control={control} defaultValue={defaultGenre}
                   rules={{ required: "At least one genre is required" }}
                   render={({ field }) => (
-                    <Select {...field} inputId="genre" options={genres} isMulti placeholder="Select genres…" styles={selectStyles} />
+                    <Select {...field} inputId="genre" options={genres} isMulti placeholder="Select genres" styles={selectStyles} />
                   )}
                 />
-                {errors.genre && <FieldError message={errors.genre.message} />}
+                {errors.genre && <FieldError msg={errors.genre.message} />}
               </div>
               <div>
                 <FieldLabel htmlFor="duration" isDark={isDark}>Duration (minutes)</FieldLabel>
                 <input
                   id="duration" type="number" placeholder="e.g. 120"
-                  style={inputStyle('duration')}
-                  onFocus={() => focusOn('duration')}
-                  onBlur={focusOff}
+                  className={inputClass}
                   defaultValue={duration}
                   {...register("duration", {
                     required: "Duration is required",
                     validate: (v) => Number(v) > 60 || "Duration must exceed 60 minutes",
                   })}
                 />
-                {errors.duration && <FieldError message={errors.duration.message} />}
+                {errors.duration && <FieldError msg={errors.duration.message} />}
               </div>
               <div>
                 <FieldLabel isDark={isDark}>Release Year</FieldLabel>
@@ -167,10 +163,10 @@ const UpdatedMovie = () => {
                   name="year" control={control} defaultValue={defaultYear}
                   rules={{ required: "Release year is required" }}
                   render={({ field }) => (
-                    <Select {...field} inputId="year" options={years} placeholder="Select year…" styles={selectStyles} />
+                    <Select {...field} inputId="year" options={years} placeholder="Select year" styles={selectStyles} />
                   )}
                 />
-                {errors.year && <FieldError message={errors.year.message} />}
+                {errors.year && <FieldError msg={errors.year.message} />}
               </div>
               <div>
                 <FieldLabel isDark={isDark}>Rating</FieldLabel>
@@ -184,7 +180,7 @@ const UpdatedMovie = () => {
                     style={{ display: 'block' }}
                   />
                 </div>
-                {updatedRating === 0 && <FieldError message="Rating is required" />}
+                {updatedRating === 0 && <FieldError msg="Rating is required" />}
               </div>
             </div>
 
@@ -196,17 +192,15 @@ const UpdatedMovie = () => {
               </FieldLabel>
               <textarea
                 id="summary" rows={4}
-                placeholder="Short synopsis of the movie…"
-                style={{ ...inputStyle('summary'), height: 'auto', resize: 'vertical' }}
-                onFocus={() => focusOn('summary')}
-                onBlur={focusOff}
+                placeholder="Short synopsis of the movie"
+                className={`${inputClass} resize-y`}
                 defaultValue={summary}
                 {...register("summary", {
                   required: "Summary is required",
                   minLength: { value: 10, message: "Summary must have at least 10 characters" },
                 })}
               />
-              {errors.summary && <FieldError message={errors.summary.message} />}
+              {errors.summary && <FieldError msg={errors.summary.message} />}
             </div>
 
             <button

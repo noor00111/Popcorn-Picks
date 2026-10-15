@@ -121,5 +121,3 @@
    The application will open at `http://localhost:5173`
 
 ---
-
-## Contributing Contributions are welcome!

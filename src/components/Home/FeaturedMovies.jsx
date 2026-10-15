@@ -55,11 +55,7 @@ const FeaturedMovies = () => {
                   key={i}
                   className="bg-black/[0.04] dark:bg-white/[0.04] rounded-2xl overflow-hidden border border-black/[0.07] dark:border-white/[0.06]">
                   <div
-                    className="[aspect-ratio:2/3] [animation:skeletonPulse_1.5s_ease-in-out_infinite]"
-                    style={{
-                      background: "linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%)",
-                      backgroundSize: "200% 100%",
-                    }}
+                    className="[aspect-ratio:2/3] [animation:skeletonPulse_1.5s_ease-in-out_infinite] bg-[length:200%_100%] bg-[linear-gradient(90deg,rgba(0,0,0,0.04)_25%,rgba(0,0,0,0.08)_50%,rgba(0,0,0,0.04)_75%)] dark:bg-[linear-gradient(90deg,rgba(255,255,255,0.03)_25%,rgba(255,255,255,0.07)_50%,rgba(255,255,255,0.03)_75%)]"
                   />
                   <div className="p-[0.875rem]">
                     <div className="h-4 w-3/4 rounded bg-black/[0.06] dark:bg-white/[0.06] mb-2" />

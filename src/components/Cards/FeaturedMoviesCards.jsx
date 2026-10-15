@@ -10,7 +10,10 @@ const FeaturedMoviesCards = ({ feature }) => {
         <img
           src={poster}
           alt={title}
-          className="w-full h-full object-cover block transition-transform duration-[0.6s] [cubic-bezier(0.4,0,0.2,1)] group-hover:scale-110"/>
+          width={200}
+          height={300}
+          loading="lazy"
+          className="w-full h-full object-cover block transition-transform duration-[0.6s] group-hover:scale-110 bg-black/[0.06] dark:bg-white/[0.05]"/>
 
         <div className="absolute top-[0.6rem] right-[0.6rem] bg-black/[0.72] backdrop-blur-[8px] rounded-[0.4rem] py-[0.2rem] px-[0.5rem] flex items-center gap-[0.25rem]">
           <FaStar className="text-[#f5c518] text-[0.65rem]" />
@@ -20,7 +23,6 @@ const FeaturedMoviesCards = ({ feature }) => {
         <div className="absolute top-[0.6rem] left-[0.6rem] bg-black/[0.72] backdrop-blur-[8px] rounded-[0.4rem] py-[0.2rem] px-[0.5rem] text-[#e5e7eb] text-[0.7rem] font-medium">
           {year}
         </div>
-
         <div className="absolute bottom-0 left-0 right-0 h-[45%] bg-[linear-gradient(to_top,rgba(0,0,0,0.80)_0%,transparent_100%)]" />
       </div>
 

@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { FaEnvelope, FaCheckCircle, FaFilm, FaBell } from "react-icons/fa";
-import { useTheme } from "../../ThemeController/DarkLightMode";
 
 const Newsletter = () => {
   const [submitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState("");
   const [focused, setFocused] = useState(false);
-  const { isDark } = useTheme();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,12 +21,7 @@ const Newsletter = () => {
     <section className="py-20 px-6 bg-[#fffbeb] dark:bg-[#0d0d1a] border-t border-b border-black/[0.07] dark:border-white/[0.06] relative overflow-hidden transition-[background] duration-300">
       <div
         aria-hidden
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] rounded-full pointer-events-none blur-[50px]"
-        style={{
-          background: isDark
-            ? "radial-gradient(circle, rgba(245,197,24,0.06) 0%, transparent 70%)"
-            : "radial-gradient(circle, rgba(245,197,24,0.18) 0%, transparent 70%)",
-        }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] rounded-full pointer-events-none blur-[50px] bg-[radial-gradient(circle,rgba(245,197,24,0.18)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(245,197,24,0.06)_0%,transparent_70%)]"
       />
 
       <div className="relative z-[1] max-w-[640px] mx-auto">
@@ -95,8 +88,7 @@ const Newsletter = () => {
               </div>
               <button
                 type="submit"
-                className="py-[0.78rem] px-7 rounded-full whitespace-nowrap text-[0.875rem] btn-gold"
-              >
+                className="py-[0.78rem] px-7 rounded-full whitespace-nowrap text-[0.875rem] btn-gold">
                 Subscribe
               </button>
             </form>

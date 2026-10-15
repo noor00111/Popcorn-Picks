@@ -12,7 +12,7 @@ const MyFavMovieCards = ({ detailsData, handleFavMovieDelete }) => {
           width={260}
           height={380}
           loading="lazy"
-          className="w-full h-full object-cover block transition-transform duration-[0.6s] ease-in-out group-hover:scale-105"/>
+          className="w-full h-full object-cover block transition-transform duration-[0.6s] ease-in-out group-hover:scale-105 bg-black/[0.06] dark:bg-white/[0.05]"/>
 
         <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-red-500/20 border border-red-500/[0.35] flex items-center justify-center">
           <FaHeart className="text-[#f87171] text-[0.75rem]" />

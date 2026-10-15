@@ -20,6 +20,7 @@ import UpdatedMovie from './pages/UpdatedMovie'
 import FeaturedMovies from './components/Home/FeaturedMovies'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import PageLoader from './components/Shared/PageLoader'
 
 const router = createBrowserRouter([
 
@@ -89,6 +90,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
   <ThemeProvider>
+  <PageLoader />
   <AuthProvider>
   <RouterProvider router={router}></RouterProvider>
   <ToastContainer />

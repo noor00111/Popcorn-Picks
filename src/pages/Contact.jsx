@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IoIosSend } from "react-icons/io";
-import { FaEnvelope, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaClock } from "react-icons/fa";
+import "../styles/cinema.css";
+
+const contactItems = [
+  { icon: FaEnvelope,     label: 'Email',    value: 'support@popcornPicks.com', href: 'mailto:support@popcornPicks.com' },
+  { icon: FaPhone,        label: 'Phone',    value: '+1 889 209 000',           href: 'tel:+1889209000' },
+  { icon: FaMapMarkerAlt, label: 'Location', value: 'Chandgoan, Chittagong' },
+  { icon: FaClock,        label: 'Hours',    value: 'Mon - Fri, 9 AM - 6 PM' },
+];
+
+const inputClass =
+  "w-full px-4 py-3 rounded-xl text-[0.92rem] font-paraFont text-bodyColor bg-[var(--auth-input-bg)] border-[1.5px] border-[var(--auth-input-border)] placeholder:text-[var(--auth-placeholder)] outline-none transition-[border-color,box-shadow] duration-200 hover:border-[var(--auth-input-border-hover)] focus:border-[#f5c518] focus:shadow-[0_0_0_4px_rgba(245,197,24,0.22)]";
+
+const labelClass = "block text-[0.78rem] font-semibold mb-1.5 text-bodyColor";
 
 const Contact = () => {
-  const [focusedField, setFocusedField] = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
@@ -12,147 +24,107 @@ const Contact = () => {
     e.target.reset();
   };
 
-  const contactItems = [
-    { icon: FaEnvelope,    label: 'Email',    value: 'hello@popcornpicks.io' },
-    { icon: FaMapMarkerAlt, label: 'Location', value: 'Dhaka, Bangladesh' },
-    { icon: FaClock,       label: 'Hours',    value: 'Mon – Fri, 9 AM – 6 PM' },
-  ];
-
-  const inputClass = (name) =>
-    `w-full py-[0.7rem] px-[0.9rem] rounded-[0.6rem] border-[1.5px] text-[0.9rem] outline-none font-paraFont transition-[border-color,box-shadow] duration-200 bg-[#fafaf8] dark:bg-white/5 text-[#1a1a1a] dark:text-[#e5e7eb] ${
-      focusedField === name
-        ? 'border-[#f5c518] shadow-[0_0_0_3px_rgba(245,197,24,0.18)]'
-        : 'border-black/[0.13] dark:border-white/10'
-    }`;
-
   return (
-    <div className="bg-backgroundColor min-h-screen px-5 py-14 transition-[background] duration-300">
-      <div className="max-w-[1000px] mx-auto">
+    <div className="bg-backgroundColor min-h-screen px-4 sm:px-6 py-12 md:py-16 transition-colors duration-300">
+      <div className="max-w-[960px] mx-auto">
 
-        <div className="text-center mb-12">
-          <span className="text-[#f5c518] text-[0.68rem] tracking-[0.26em] uppercase font-bold">
-            We'd love to hear from you
-          </span>
-          <h1 className="font-titleFont text-[clamp(2.2rem,5vw,3.5rem)] text-[#1a1a1a] dark:text-white leading-[1.1] [text-wrap:balance] mt-[0.35rem]">
-            Get in Touch
-          </h1>
-          <p className="text-gray-400 dark:text-gray-500 text-[0.95rem] mt-[0.6rem] max-w-[480px] mx-auto">
-            Questions, feedback, or just want to say hi? Drop us a message — we reply within 24 hours.
+        <header className="text-center mb-10 md:mb-12">
+          <p className="text-[0.7rem] font-bold tracking-[0.4em] uppercase text-[#b45309] dark:text-[#f5c518]">
+            Contact
           </p>
-        </div>
+          <h1 className="font-titleFont text-[clamp(2.6rem,7vw,4rem)] leading-none mt-2 text-bodyColor [text-wrap:balance]">
+            Send us a note
+          </h1>
+          <p className="mt-4 text-[0.98rem] leading-relaxed text-colorMuted max-w-[500px] mx-auto [text-wrap:pretty]">
+            A question about a listing, a bug you spotted, or an idea for the site? We read every message.
+          </p>
+        </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-6 items-start">
+        <div className="grid md:grid-cols-[1fr_300px] rounded-[1.5rem] overflow-hidden bg-[var(--auth-card-bg)] border border-[var(--auth-card-border)] shadow-[var(--auth-card-shadow)]">
+          <div className="p-6 sm:p-10" aria-live="polite">
 
-          <div className="bg-[rgba(245,197,24,0.06)] border border-[rgba(245,197,24,0.18)] dark:border-[rgba(245,197,24,0.15)] rounded-2xl p-8">
-            <h2 className="font-titleFont text-2xl text-[#f5c518] mb-1">
-              Popcorn Picks
-            </h2>
-            <p className="text-gray-400 dark:text-gray-500 text-[0.85rem] mb-7 leading-[1.6]">
-              Your cinematic universe, always open.
-            </p>
-
-            <div className="flex flex-col gap-[1.1rem]">
-              {contactItems.map(({ icon: Icon, label, value }) => (
-                <div key={label} className="flex items-start gap-[0.875rem]">
-                  <div className="w-[2.1rem] h-[2.1rem] rounded-lg shrink-0 bg-[rgba(245,197,24,0.12)] border border-[rgba(245,197,24,0.20)] flex items-center justify-center">
-                    <Icon className="text-[#f5c518] text-[0.8rem]" />
-                  </div>
-                  <div>
-                    <div className="text-[0.68rem] font-bold tracking-[0.1em] uppercase text-gray-500 dark:text-gray-400 mb-[0.1rem]">
-                      {label}
-                    </div>
-                    <div className="text-[#1a1a1a] dark:text-[#e5e7eb] text-sm">{value}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-black/[0.07] dark:border-white/[0.06]">
-              <p className="text-gray-400 dark:text-gray-500 text-[0.8rem] leading-[1.7]">
-                Found a bug or want a feature? Open an issue on our GitHub — we review all reports.
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-white dark:bg-[#0d0d1a] border border-black/[0.08] dark:border-white/[0.07] rounded-2xl p-8 shadow-[0_16px_48px_rgba(0,0,0,0.07)] dark:shadow-[0_16px_48px_rgba(0,0,0,0.50)]">
             {submitted ? (
-              <div className="text-center py-12">
-                <div className="text-[2.5rem] mb-3">🎬</div>
-                <h3 className="font-titleFont text-2xl text-[#f5c518] mb-[0.4rem]">
-                  Message sent!
-                </h3>
-                <p className="text-gray-400 dark:text-gray-500 text-[0.9rem]">
-                  Thanks for reaching out. We'll get back to you soon.
+              <div className="flex flex-col items-center text-center py-10">
+                <div className="ticket-stamp px-6 py-2 rounded-lg border-[3px] border-double border-[#b91c1c] dark:border-[#f87171] text-[#b91c1c] dark:text-[#f87171] font-titleFont text-4xl tracking-wider">
+                  Received
+                </div>
+                <h2 className="mt-8 text-xl font-bold text-bodyColor">Message sent</h2>
+                <p className="mt-2 text-sm text-colorMuted max-w-[34ch]">
+                  We'll reply to the email address you gave us.
                 </p>
                 <button
+                  type="button"
                   onClick={() => setSubmitted(false)}
-                  className="mt-5 px-5 py-[0.55rem] rounded-full border border-[rgba(245,197,24,0.30)] bg-transparent text-[#f5c518] text-[0.8rem] cursor-pointer transition-[background] duration-200 hover:bg-[rgba(245,197,24,0.10)]"
-                >
-                  Send another
+                  className="mt-6 px-5 py-2 rounded-full text-sm font-semibold border border-[var(--auth-input-border)] text-bodyColor transition-colors duration-200 hover:border-[#f5c518] hover:bg-[rgba(245,197,24,0.10)]">
+                  Write another message
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-[1.1rem]">
-
-                <div>
-                  <label htmlFor="contact-name" className="block text-[0.78rem] font-bold mb-[0.4rem] text-[#374151] dark:text-[#d1d5db]">
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="contact-name"
-                    name="name"
-                    autoComplete="name"
-                    placeholder="Ada Lovelace"
-                    required
-                    className={inputClass('name')}
-                    onFocus={() => setFocusedField('name')}
-                    onBlur={() => setFocusedField(null)}
-                  />
+              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label htmlFor="contact-name" className={labelClass}>Name</label>
+                    <input id="contact-name" name="name" type="text" autoComplete="name"
+                      placeholder="Jane Doe" required className={inputClass} />
+                  </div>
+                  <div>
+                    <label htmlFor="contact-email" className={labelClass}>Email</label>
+                    <input id="contact-email" name="email" type="email" autoComplete="email"
+                      spellCheck={false} placeholder="you@example.com" required className={inputClass} />
+                  </div>
                 </div>
 
                 <div>
-                  <label htmlFor="contact-email" className="block text-[0.78rem] font-bold mb-[0.4rem] text-[#374151] dark:text-[#d1d5db]">
-                    Your Email
-                  </label>
-                  <input
-                    type="email"
-                    id="contact-email"
-                    name="email"
-                    autoComplete="email"
-                    placeholder="you@example.com"
-                    required
-                    className={inputClass('email')}
-                    onFocus={() => setFocusedField('email')}
-                    onBlur={() => setFocusedField(null)}
-                  />
+                  <label htmlFor="contact-subject" className={labelClass}>Subject</label>
+                  <input id="contact-subject" name="subject" type="text" autoComplete="off"
+                    placeholder="A wrong poster, a feature idea" required className={inputClass} />
                 </div>
 
                 <div>
-                  <label htmlFor="contact-message" className="block text-[0.78rem] font-bold mb-[0.4rem] text-[#374151] dark:text-[#d1d5db]">
-                    Message
-                  </label>
-                  <textarea
-                    id="contact-message"
-                    name="message"
-                    rows={5}
-                    placeholder="Tell us what's on your mind…"
-                    required
-                    className={`${inputClass('message')} h-auto resize-y`}
-                    onFocus={() => setFocusedField('message')}
-                    onBlur={() => setFocusedField(null)}
-                  />
+                  <label htmlFor="contact-message" className={labelClass}>Message</label>
+                  <textarea id="contact-message" name="message" rows={6}
+                    placeholder="Tell us what's on your mind" required
+                    className={`${inputClass} resize-y`} />
                 </div>
 
-                <button
-                  type="submit"
-                  className="flex items-center justify-center gap-2 py-[0.8rem] rounded-xl text-[0.95rem] btn-gold-sm">
-                  <IoIosSend className="text-base" />
-                  Send Message
+                <button type="submit"
+                  className="self-start inline-flex items-center gap-2 px-7 py-3 rounded-xl text-[0.95rem] btn-gold">
+                  <IoIosSend className="text-lg" aria-hidden="true" />
+                  Send message
                 </button>
               </form>
             )}
           </div>
+
+          <aside className="ticket-stub bg-[#1c1917] text-white px-7 py-9 flex flex-col">
+            <p className="text-[0.65rem] font-bold tracking-[0.4em] uppercase text-[#f5c518]">
+              Admit one
+            </p>
+            <p className="font-titleFont text-3xl mt-1 text-white">PopcornPicks</p>
+
+            <ul className="mt-8 space-y-5">
+              {contactItems.map(({ icon: Icon, label, value, href }) => (
+                <li key={label} className="flex items-start gap-3">
+                  <Icon className="mt-1 shrink-0 text-[0.85rem] text-[#f5c518]" aria-hidden="true" />
+                  <div className="min-w-0">
+                    <p className="text-[0.65rem] font-bold tracking-[0.14em] uppercase text-white/50">{label}</p>
+                    {href ? (
+                      <a href={href} className="text-sm text-white/90 break-words hover:text-[#f5c518] transition-colors duration-200">
+                        {value}
+                      </a>
+                    ) : (
+                      <p className="text-sm text-white/90">{value}</p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <div aria-hidden="true"
+              className="mt-auto pt-10">
+              <div className="h-10 opacity-60 bg-[repeating-linear-gradient(90deg,#fff_0_2px,transparent_2px_4px,#fff_4px_5px,transparent_5px_9px,#fff_9px_12px,transparent_12px_14px)]" />
+            </div>
+          </aside>
         </div>
       </div>
     </div>

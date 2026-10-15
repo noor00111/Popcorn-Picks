@@ -23,7 +23,7 @@ const HomeLayout = () => {
   }, [location]);
 
   return (
-    <div style={{ backgroundColor: 'var(--body_background)', color: 'var(--body_color)', minHeight: '100vh', transition: 'background-color 0.3s ease, color 0.3s ease' }}>
+    <div className="bg-backgroundColor text-bodyColor min-h-screen transition-colors duration-300">
       <Navbar />
       <Outlet />
       <Footer />
